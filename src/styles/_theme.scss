@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700&display=swap');
+
+@import '~@angular/material/theming';
+@import "colors";
+
+$primary-palette: mat-palette($mint-palette);
+$primary: $mint;
+$secondary-palette: mat-palette($fawn-palette);
+$secondary: $fawn;
+$accent-palette: mat-palette($space-cadette-palette);
+$accent: $space-cadet;
+$text: $space-cadet;
+$warn-palette: mat-palette($bright-maroon-palette);
+$warn: $bright-maroon;
+$background-color: $alice-blue;
+
+// Create the theme 
+$base-theme: mat-light-theme($primary-palette, $accent-palette, $warn-palette);
+$mat-light-theme-foreground: (
+  base:              $text,
+  divider:           rgba($text, 0.12),
+  dividers:          rgba($text, 0.12),
+  disabled:          rgba($text, 0.38),
+  disabled-button:   rgba($text, 0.38),
+  disabled-text:     rgba($text, 0.38),
+  hint-text:         rgba($text, 0.38),
+  secondary-text:    rgba($text, 0.54),
+  icon:              rgba($text, 0.54),
+  icons:             rgba($text, 0.54),
+  text:              rgba($text, 0.87),
+  slider-off:        rgba($text, 0.26),
+  slider-off-active: rgba($text, 0.38),
+);
+$theme: map-merge($base-theme, (foreground: $mat-light-theme-foreground));
+
+// Define custom typography
+$typography: mat-typography-config(
+    $font-family: 'Nunito, sans-serif'
+);
+
+@font-face {
+  font-family: 'Nunito', sans-serif;
+}
