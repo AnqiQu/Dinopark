@@ -1,7 +1,7 @@
 import { Gender } from "../enums/gender";
 
 export interface Dino {
-  id: number,
+  id: string,
   name: string,
   species: string,
   gender: Gender,
