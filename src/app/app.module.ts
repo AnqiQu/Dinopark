@@ -4,9 +4,12 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
+import { ParkMaintenanceGridComponent } from "./components/park-maintenance-grid/park-maintenance-grid.component"
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ParkMaintenanceGridComponent
   ],
   imports: [
     BrowserModule,
