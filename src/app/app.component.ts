@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { NudlsApiService } from './services/nudls-api.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Dinopark';
+
+  constructor(
+    @Inject(NudlsApiService) protected nudlsApiService: NudlsApiService,
+  ) {
+    
+  }
+
+  
 }

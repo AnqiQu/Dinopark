@@ -1,4 +1,5 @@
 export interface DinoLocation {
   dinoId: string;
-  locationId: string
+  locationId: string;
+  time: Date
 }

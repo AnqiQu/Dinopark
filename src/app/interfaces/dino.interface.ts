@@ -1,12 +1,11 @@
-import { Gender } from "../enums/gender";
-
 export interface Dino {
   id: string,
   name: string,
   species: string,
-  gender: Gender,
+  gender: string,
   digestionPeriod: number,
   isHerbivore: boolean,
   timeAdded: Date,
-  parkId: string
+  parkId: string,
+  timeLastFed?: Date
 }
