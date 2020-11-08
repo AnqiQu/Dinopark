@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\enums",
+    "\\src\\app\\interfaces",
+    "\\src\\app\\services"
+  ],
+  "SelectedNode": "\\src\\app\\services\\nudls-api.service.ts",
+  "PreviewInSolutionExplorer": false
+}
