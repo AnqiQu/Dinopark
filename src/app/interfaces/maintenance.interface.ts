@@ -1,4 +1,4 @@
-export interface Maintainance {
+export interface Maintenance {
     locationId: string,
     time: Date
 }

@@ -2,23 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Dino } from '../interfaces/dino.interface';
 import { DinoLocation } from '../interfaces/dino-location.interface';
-import { Maintainance } from '../interfaces/maintainance.interface';
+import { Maintenance } from '../interfaces/maintenance.interface';
 import { EventKind } from '../enums/event-kind'
 
 @Injectable({ providedIn: 'root' })
 export class NudlsApiService {
 
-  dinos: Dino[];
-  dinoLocations: DinoLocation[];
-  maintainances: Maintainance[];
+  dinos: Dino[] = [];
+  dinoLocations: DinoLocation[] = [];
+  maintenances: Maintenance[] = [];
 
   constructor(
     private http: HttpClient
   ) {
     this.http.get('https://dinoparks.net/nudls/feed').subscribe((feed: Array<any>) => {
+      feed.sort((a, b) => +(new Date(a.time)) - +(new Date(b.time)));
       feed.forEach(event => {
         switch (event.kind){
-          case (EventKind.dino_added): {
+          case (EventKind.DinoAdded): {
             let dino: Dino = {
               id: event.id,
               name: event.name,
@@ -26,46 +27,46 @@ export class NudlsApiService {
               gender: event.gender,
               digestionPeriod: event.digestion_period_in_hours,
               isHerbivore: event.herbivore,
-              timeAdded: event.time,
+              timeAdded: new Date(event.time),
               parkId: event.park_id
             }
             this.dinos.push(dino);
             break;
           }
-          case (EventKind.dino_removed): {
-            let dino = this.dinos.find(x => x.id == event.id);
-            if (event.time > dino.timeAdded) {
+          case (EventKind.DinoRemoved): {
+            let dino = this.dinos.find(x => x.id == event.dinosaur_id);
+            if (new Date(event.time) > dino.timeAdded) {
               this._removeDino(dino)
             }
             break;
           }
-          case (EventKind.dino_location_updated): {
+          case (EventKind.DinoLocationUpdated): {
             let oldLocation = this.dinoLocations.find(x => x.dinoId == event.dinosaur_id);
-            if (oldLocation && oldLocation.time < event.time) {
+            if (oldLocation && oldLocation.time < new Date(event.time)) {
               this._removeDinoLocation(oldLocation)
             }
 
             let newLocation: DinoLocation = {
               dinoId: event.dinosaur_id,
               locationId: event.location,
-              time: event.time
+              time: new Date(event.time)
             }
             this.dinoLocations.push(newLocation);
             break;
           }
-          case (EventKind.dino_fed): {
-            let dino = this.dinos.find(x => x.id == event.id);
-            if (dino.timeLastFed == null || dino.timeLastFed < event.time) {
-              dino.timeLastFed = event.time
+          case (EventKind.DinoFed): {
+            let dino = this.dinos.find(x => x.id == event.dinosaur_id);
+            if (dino.timeLastFed == null || dino.timeLastFed < new Date(event.time)) {
+              dino.timeLastFed = new Date(event.time)
             }
             break;
           }
-          case (EventKind.maintainence_performed): {
-            let maintainance: Maintainance = {
+          case (EventKind.MaintenancePerformed): {
+            let maintenance: Maintenance = {
               locationId: event.location,
-              time: event.time
+              time: new Date(event.time)
             }
-            this.maintainances.push(maintainance);
+            this.maintenances.push(maintenance);
             break;
           }
           default: {
@@ -73,11 +74,11 @@ export class NudlsApiService {
           }
         }
       });
-    })
 
-    console.log(this.dinos);
-    console.log(this.dinoLocations);
-    console.log(this.maintainances);
+      console.log(this.dinos);
+      console.log(this.dinoLocations);
+      console.log(this.maintenances);
+    })
   }
 
   getDinos() {
@@ -88,14 +89,18 @@ export class NudlsApiService {
     return this.dinoLocations;
   }
 
-  getMaintainances() {
-    return this.maintainances;
+  getMaintenances() {
+    return this.maintenances;
   }
 
   private _removeDino(dino: Dino) {
     var index = this.dinos.indexOf(dino);
       if (index > -1) {
         this.dinos.splice(index, 1);
+        let locationIndex = this.dinoLocations.findIndex(x => x.dinoId == dino.id);
+        if (locationIndex > -1) {
+          this.dinoLocations.splice(locationIndex, 1);
+        }
       }
   }
 
