@@ -19,6 +19,7 @@ export class ParkMaintenanceGridComponent implements OnInit {
     maintenances: Maintenance[];
 
     grid: GridTile[][] = Array.from(Array(16), () => new Array(26));
+    AlphabetLetters = AlphabetLetter;
 
   constructor(
     @Inject(NudlsApiService) protected nudlsApiService: NudlsApiService,

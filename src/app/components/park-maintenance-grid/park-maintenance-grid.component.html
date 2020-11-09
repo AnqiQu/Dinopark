@@ -1,7 +1,24 @@
-<mat-card>
-    <mat-grid-list cols="26" rowHeight="1:1">
-        <ng-container *ngFor="let column of grid">
-            <mat-grid-tile *ngFor="let row of column">{{ row.id }}</mat-grid-tile>
-        </ng-container>
-    </mat-grid-list>
+<mat-card class="mx-auto w-75">
+    <div class="d-flex justify-content-between align-items-end p-3">
+        <h1>Park Zones</h1>
+        <h2>Date</h2>
+    </div>
+    <mat-card-content>
+        <mat-grid-list cols="27" rowHeight="1.5:1" gutterSize="0px">
+            <ng-container *ngFor="let row of grid; index as i">
+                <mat-grid-tile>
+                    {{ i + 1 }}
+                </mat-grid-tile>
+                <mat-grid-tile *ngFor="let tile of row"
+                                class="map-tile">
+                    {{ tile.id }}
+                </mat-grid-tile>
+            </ng-container>
+            <mat-grid-tile></mat-grid-tile> <!--Spacer tile-->
+            <mat-grid-tile *ngFor="let letter of AlphabetLetters | enumToArray"
+                            class="letter-tile">
+                {{ letter.value }}
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-card-content>
 </mat-card>
