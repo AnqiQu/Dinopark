@@ -11,7 +11,7 @@ body {
     margin: 0;
     font-family: "Nunito", sans-serif !important;
     color: $text !important;
-    background-color: $background-color;
+    background-color: $background-color !important;
 }
 
 *::-webkit-scrollbar {
