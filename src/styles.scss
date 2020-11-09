@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./styles/theme";
+
+@include mat-core($typography);
+@include mat-base-typography($typography);
+@include angular-material-theme($theme);
+@include angular-material-typography($typography);
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-family: "Nunito", sans-serif !important;
+    color: $text !important;
+    background-color: $background-color;
+}
+
+*::-webkit-scrollbar {
+    width: 5px;
+}
+  
+body::-webkit-scrollbar-track {
+ background: white;
+}
+  
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+   background: $primary;
+}
