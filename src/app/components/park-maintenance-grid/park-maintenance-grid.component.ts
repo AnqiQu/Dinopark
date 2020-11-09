@@ -24,7 +24,8 @@ export class ParkMaintenanceGridComponent implements OnInit {
     grid: GridTile[][] = Array.from(Array(16), () => new Array(26));
     AlphabetLetters = AlphabetLetter;
     dateNow = new Date();
-    maintenanceImage = '../../../assets/dino-parks-wrench.png'
+    maintenanceImage = '../../../assets/dino-parks-wrench.png';
+    loading = true;
 
   constructor(
     @Inject(NudlsApiService) protected nudlsApiService: NudlsApiService,
@@ -36,6 +37,8 @@ export class ParkMaintenanceGridComponent implements OnInit {
       this.dinos = result.dinos;
       this.dinoLocations = result.dinoLocations;
       this.maintenances = result.maintenances;
+
+      this.loading = false;
     });
 
     for (var i = 0; i < 16; i++) {
@@ -79,16 +82,26 @@ export class ParkMaintenanceGridComponent implements OnInit {
   }
 
   needsMaintenance(tile: GridTile): boolean {
-    let tileMaintainences = this.maintenances?.filter(a => a.locationId == tile.id);
-    if (tileMaintainences.length == 0) {
+    let tileMaintenances = this.maintenances?.filter(a => a.locationId == tile.id);
+    if (!tileMaintenances || tileMaintenances.length == 0) {
       return false;
     }
+    tileMaintenances.sort((a, b) => +b.time - +a.time); // Sorts the past maintenances in descending order 
+    return this._getDifferenceInDays(this.dateNow, tileMaintenances[0].time) > 30;
+  }
 
-    tileMaintainences.sort((a, b) => +b.time - +a.time);
-
-    console.log(tileMaintainences);
-
-    return this._getDifferenceInDays(this.dateNow, tileMaintainences[0].time) > 30;
+  getTooltip(tile: GridTile): string {
+    let tooltip = "";
+    if (this.needsMaintenance(tile)) {
+      tooltip += "Needs maintenance "
+    }
+    if (this.getStatus(tile) == ZoneStatus.Safe) {
+      tooltip += "(Safe)"
+    }
+    if (this.getStatus(tile) == ZoneStatus.Unsafe) {
+      tooltip += "(Unsafe)"
+    }
+    return tooltip;
   }
 
   private _containsDino(tile: GridTile): boolean {
