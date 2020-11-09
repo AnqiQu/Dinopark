@@ -16,16 +16,16 @@ import * as moment from 'moment';
 
 export class ParkMaintenanceGridComponent implements OnInit {
 
-    dinos: Dino[];
-    dinoLocations: DinoLocation[];
-    maintenances: Maintenance[];
+  dinos: Dino[];
+  dinoLocations: DinoLocation[];
+  maintenances: Maintenance[];
 
-    // Our grid is a 2D array of GridTiles, measuring 16 X 26 tiles 
-    grid: GridTile[][] = Array.from(Array(16), () => new Array(26));
-    AlphabetLetters = AlphabetLetter;
-    dateNow = new Date();
-    maintenanceImage = '../../../assets/dino-parks-wrench.png';
-    loading = true;
+  // Our grid is a 2D array of GridTiles, measuring 16 X 26 tiles 
+  grid: GridTile[][] = Array.from(Array(16), () => new Array(26));
+  AlphabetLetters = AlphabetLetter;
+  dateNow = new Date();
+  maintenanceImage = '../../../assets/dino-parks-wrench.png';
+  loading = true;
 
   constructor(
     @Inject(NudlsApiService) protected nudlsApiService: NudlsApiService,
@@ -70,7 +70,7 @@ export class ParkMaintenanceGridComponent implements OnInit {
     let dinos = this._getDinosInZone(tile);
     if (dinos.every(a => a.isHerbivore || this._isDigestingMeal(a))) {
       return ZoneStatus.Safe;
-    } 
+    }
     return ZoneStatus.Unsafe;
   }
 
@@ -78,7 +78,7 @@ export class ParkMaintenanceGridComponent implements OnInit {
     switch (this.getStatus(tile)) {
       case (ZoneStatus.Safe): {
         return 'green';
-      } 
+      }
       case (ZoneStatus.Unsafe): {
         return 'red';
       }
@@ -97,7 +97,7 @@ export class ParkMaintenanceGridComponent implements OnInit {
 
     // Sorts the past maintenances in descending order.
     // This helps us find the latest maintenance date if a tile has been maintained multiple times
-    tileMaintenances.sort((a, b) => +b.time - +a.time); 
+    tileMaintenances.sort((a, b) => +b.time - +a.time);
     return this._getDifferenceInDays(this.dateNow, tileMaintenances[0].time) > 30; // A maintainance is needed if it was last maintained more then 30 days ago
   }
 

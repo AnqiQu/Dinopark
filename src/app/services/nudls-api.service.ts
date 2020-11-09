@@ -29,7 +29,7 @@ export class NudlsApiService {
 
       // The events are then processed and mapped accordingly
       feed.forEach(event => {
-        switch (event.kind){
+        switch (event.kind) {
           case (EventKind.DinoAdded): { // A dinosaur object is created and added to the dinosaur list when a dinosaur is added to the park
             let dino: Dino = {
               id: event.id,
@@ -93,26 +93,26 @@ export class NudlsApiService {
         maintenances: this.maintenances
       } as ApiOutputData);
 
-      });
-      return subject.asObservable();
+    });
+    return subject.asObservable();
   }
 
   private _removeDino(dino: Dino) {
     var index = this.dinos.indexOf(dino);
-      if (index > -1) {
-        this.dinos.splice(index, 1);
-        let locationIndex = this.dinoLocations.findIndex(x => x.dinoId == dino.id);
-        if (locationIndex > -1) {
-          this.dinoLocations.splice(locationIndex, 1);
-        }
+    if (index > -1) {
+      this.dinos.splice(index, 1);
+      let locationIndex = this.dinoLocations.findIndex(x => x.dinoId == dino.id);
+      if (locationIndex > -1) {
+        this.dinoLocations.splice(locationIndex, 1);
       }
+    }
   }
 
   private _removeDinoLocation(dinoLocation: DinoLocation) {
     var index = this.dinoLocations.indexOf(dinoLocation);
-      if (index > -1) {
-        this.dinoLocations.splice(index, 1);
-      }
+    if (index > -1) {
+      this.dinoLocations.splice(index, 1);
+    }
   }
 
 }

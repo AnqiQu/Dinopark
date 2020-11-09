@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'enumToArray'})
+@Pipe({ name: 'enumToArray' })
 export class EnumToArrayPipe implements PipeTransform {
-  transform(value) : Object {
-    return Object.keys(value).filter(e => !isNaN(+e)).map(o => { return {value: value[o]}});
+  transform(value): Object {
+    return Object.keys(value).filter(e => !isNaN(+e)).map(o => { return { value: value[o] } });
   }
 }

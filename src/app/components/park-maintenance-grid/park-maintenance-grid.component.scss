@@ -2,61 +2,62 @@
 @import "~bootstrap/scss/bootstrap-grid";
 
 mat-card {
-    width: 75%;
+  width: 75%;
+
+  @include media-breakpoint-down(sm) {
+    width: 95%;
+  }
+
+  .card-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 1rem;
+    background-color: white;
+
     @include media-breakpoint-down(sm) {
-        width: 95%;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: center;
     }
 
-    .card-heading {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        padding: 1rem;
-        background-color: white;
-
-        @include media-breakpoint-down(sm) {
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.3rem;
-            margin-top: 1rem;
-            font-weight: bold;
-        }
-    
-        h2 {
-            font-size: 1.5rem;
-            color: $dark-grey;
-        }
-
+    h1 {
+      font-size: 2.3rem;
+      margin-top: 1rem;
+      font-weight: bold;
     }
 
-    mat-grid-list{
-        mat-grid-tile {
-            background-color: white;
+    h2 {
+      font-size: 1.5rem;
+      color: $dark-grey;
+    }
 
-            &.map-tile {
-                border: solid 1.5px $light-grey;
-            }
+  }
 
-            &.letter-tile {
-                border-top: solid 1.5px $light-grey;
-            }
+  mat-grid-list {
+    mat-grid-tile {
+      background-color: white;
 
-            &.green {
-                background-color: $primary;
-            }
-            
-            &.red {
-                background-color: $warn;
-            }
+      &.map-tile {
+        border: solid 1.5px $light-grey;
+      }
 
-            @include media-breakpoint-down(sm) {
-                font-size: 0.5rem;
-            }
-        }
-    } 
+      &.letter-tile {
+        border-top: solid 1.5px $light-grey;
+      }
+
+      &.green {
+        background-color: $primary;
+      }
+
+      &.red {
+        background-color: $warn;
+      }
+
+      @include media-breakpoint-down(sm) {
+        font-size: 0.5rem;
+      }
+    }
+  }
 }
