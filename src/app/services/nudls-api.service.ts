@@ -74,10 +74,6 @@ export class NudlsApiService {
           }
         }
       });
-
-      console.log(this.dinos);
-      console.log(this.dinoLocations);
-      console.log(this.maintenances);
     })
   }
 

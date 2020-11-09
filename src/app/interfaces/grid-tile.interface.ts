@@ -3,5 +3,5 @@ export interface GridTile {
   column: number,
   row: number,
   lastMaintainenceDate?: Date,
-  safeToMaintain: boolean
+  safeToMaintain?: boolean
 }
