@@ -1,31 +1,36 @@
 <ng-container *ngIf="!loading; else loadingBar">
+    <!-- I used a mat-card component because its built-in styling is very similar to what I am trying to achieve -->
     <mat-card class="mx-auto">
         <div class="card-heading">
             <h1>Park Zones</h1>
             <h2>{{ formatDateForHeading(dateNow) }}</h2>
         </div>
         <mat-card-content>
-            <mat-grid-list cols="27" rowHeight="1.5:1" gutterSize="0px">
+            <mat-grid-list cols="27" rowHeight="1.5:1" gutterSize="0px"> <!-- I used a grid with 27 columns, with column 1 being the row numbers -->
                 <ng-container *ngFor="let row of grid; index as i">
-                    <mat-grid-tile>
+                    <mat-grid-tile> <!-- This is the first "tile" in each row which shows the row number -->
                         {{ i + 1 }}
                     </mat-grid-tile>
                     <mat-grid-tile *ngFor="let tile of row"
                                     class="map-tile {{ getTileColor(tile) }}"
                                     matTooltip="{{ getTooltip(tile) }}">
+                        <!-- Wrench image shows in the tile if there is maintenance due -->
                         <img *ngIf="needsMaintenance(tile)" src="{{ maintenanceImage }}" alt="wrench" class="h-75">
                     </mat-grid-tile>
                 </ng-container>
                 <mat-grid-tile></mat-grid-tile> <!--Spacer tile-->
+                <!-- This is the last "tile" in each column which shows the column letter -->
                 <mat-grid-tile *ngFor="let letter of AlphabetLetters | enumToArray"
                                 class="letter-tile">
                     {{ letter.value }}
                 </mat-grid-tile>
+                <!-- I used mat-grid-tiles to show the row numbers and column letters so that the styling (spacing etc) would be uniform throughout the grid -->
             </mat-grid-list>
         </mat-card-content>
     </mat-card>
 </ng-container>
 
+<!-- Since our data is loaded from an http endpoint, it's a bit async. So this loading bar shows while the data is being loaded -->
 <ng-template #loadingBar>
     <div class="d-flex justify-content-center align-items-center">
         <mat-spinner></mat-spinner>

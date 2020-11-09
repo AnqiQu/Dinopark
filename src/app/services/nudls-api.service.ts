@@ -5,7 +5,6 @@ import { DinoLocation } from '../interfaces/dino-location.interface';
 import { Maintenance } from '../interfaces/maintenance.interface';
 import { EventKind } from '../enums/event-kind';
 import { ApiOutputData } from '../interfaces/api-output-data.interface';
-import { tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -22,11 +21,16 @@ export class NudlsApiService {
 
   getData(): Observable<ApiOutputData> {
     var subject = new Subject<ApiOutputData>();
+    // Calls the NUDLS endpoint to get the data for the dinosaurs and park 
     this.http.get<any>('https://dinoparks.net/nudls/feed').subscribe((feed: Array<any>) => {
+      // The events are sorted in ascending order chronologically.
+      // This ensures the feed is logical, for instance a dinosaur will not be removed before it is added
       feed.sort((a, b) => +(new Date(a.time)) - +(new Date(b.time)));
+
+      // The events are then processed and mapped accordingly
       feed.forEach(event => {
         switch (event.kind){
-          case (EventKind.DinoAdded): {
+          case (EventKind.DinoAdded): { // A dinosaur object is created and added to the dinosaur list when a dinosaur is added to the park
             let dino: Dino = {
               id: event.id,
               name: event.name,
@@ -41,8 +45,8 @@ export class NudlsApiService {
             break;
           }
           case (EventKind.DinoRemoved): {
-            let dino = this.dinos.find(x => x.id == event.dinosaur_id);
-            if (new Date(event.time) > dino.timeAdded) {
+            let dino = this.dinos.find(x => x.id == event.dinosaur_id); // A dinosaur is removed from the dinosaur list when a dinosaur is removed from the park
+            if (new Date(event.time) > dino.timeAdded) { // Validation to make sure the dinosaur is removed after it is added
               this._removeDino(dino)
             }
             break;
@@ -50,7 +54,7 @@ export class NudlsApiService {
           case (EventKind.DinoLocationUpdated): {
             let oldLocation = this.dinoLocations.find(x => x.dinoId == event.dinosaur_id);
             if (oldLocation && oldLocation.time < new Date(event.time)) {
-              this._removeDinoLocation(oldLocation)
+              this._removeDinoLocation(oldLocation) // Removes the dinosaur's old location from the locations list when a dinosaur moves
             }
 
             let newLocation: DinoLocation = {
@@ -58,18 +62,18 @@ export class NudlsApiService {
               locationId: event.location,
               time: new Date(event.time)
             }
-            this.dinoLocations.push(newLocation);
+            this.dinoLocations.push(newLocation); // The dinosaur's new location is added to the locations list 
             break;
           }
           case (EventKind.DinoFed): {
             let dino = this.dinos.find(x => x.id == event.dinosaur_id);
             if (dino.timeLastFed == null || dino.timeLastFed < new Date(event.time)) {
-              dino.timeLastFed = new Date(event.time)
+              dino.timeLastFed = new Date(event.time) // Updates the latest time that a dinosaur was fed 
             }
             break;
           }
           case (EventKind.MaintenancePerformed): {
-            let maintenance: Maintenance = {
+            let maintenance: Maintenance = { // Creates a maintenance object and adds it to the list of maintenances 
               locationId: event.location,
               time: new Date(event.time)
             }
@@ -82,6 +86,7 @@ export class NudlsApiService {
         }
       });
 
+      // The lists of dinosaurs, dinosaur locations and maintenances are then returned 
       subject.next({
         dinos: this.dinos,
         dinoLocations: this.dinoLocations,
