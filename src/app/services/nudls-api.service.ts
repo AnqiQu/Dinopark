@@ -6,7 +6,7 @@ import { Maintenance } from '../interfaces/maintenance.interface';
 import { EventKind } from '../enums/event-kind';
 import { ApiOutputData } from '../interfaces/api-output-data.interface';
 import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class NudlsApiService {
@@ -20,9 +20,9 @@ export class NudlsApiService {
   ) {
   }
 
-  getData(): Observable<any> {
-    return this.http.get<any>('https://dinoparks.net/nudls/feed').pipe(
-      tap((feed: Array<any>) => {
+  getData(): Observable<ApiOutputData> {
+    var subject = new Subject<ApiOutputData>();
+    this.http.get<any>('https://dinoparks.net/nudls/feed').subscribe((feed: Array<any>) => {
       feed.sort((a, b) => +(new Date(a.time)) - +(new Date(b.time)));
       feed.forEach(event => {
         switch (event.kind){
@@ -81,15 +81,15 @@ export class NudlsApiService {
           }
         }
       });
-
-      return {
+      
+      subject.next({
         dinos: this.dinos,
         dinoLocations: this.dinoLocations,
         maintenances: this.maintenances
-      } as ApiOutputData
+      } as ApiOutputData);
 
-      }) 
-    );
+      });
+      return subject.asObservable();
   }
 
   private _removeDino(dino: Dino) {

@@ -78,7 +78,7 @@ export class ParkMaintenanceGridComponent implements OnInit {
   }
 
   private _containsDino(tile: GridTile): boolean {
-    return this.dinoLocations.some(a => a.locationId == tile.id);
+    return this.dinoLocations?.some(a => a.locationId == tile.id);
   }
 
   private _getDinoInZone(tile: GridTile): Dino {

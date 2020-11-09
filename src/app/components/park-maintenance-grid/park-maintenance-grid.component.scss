@@ -24,11 +24,11 @@ mat-card {
                 border-top: solid 1.5px $light-grey;
             }
 
-            .green {
+            &.green {
                 background-color: $primary;
             }
             
-            .red {
+            &.red {
                 background-color: $warn;
             }
         }
