@@ -1,27 +1,43 @@
-# Dinopark
+# Dinopark ~ Anqi Qu
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.5.
+Dinopark is an interactive and visual tool which can be used to help employees of Dinopark carry out their maintenance jobs around the dinosaur park. The UI shows the park divided into a grid of zones. Zones that need maintenance will show a wrench icon. Zones that are definitely safe to enter will be shaded in green, and zones that are unsafe to enter will be shaded in red. 
 
-## Development server
+## How to run the dev server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Download the code and install packages. Then run `ng serve` in the terminal for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## How I approached the problem 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+After reading through the brief, I started thinking about what 
 
-## Build
+At first I wanted to save the data into an in-memory database, or even make a backend 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+I tried to include as many knowledge points as I reasonably could into this project so that I could demonstrate my skill. This includes: components, a custom service, a custom pipe, enums, interfaces, custom theming and a favicon. 
 
-## Running unit tests
+The app is also responsive.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## What I would do differently if I had to do it again
 
-## Running end-to-end tests
+I'd focus much more on the app's performance, as Lighthouse said that it could be improved. I'd also try to make the app a PWA.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## What I learned from this project
 
-## Further help
+My biggest takeaway from this project is probably the timing of async.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## How I think this challenge can be improved 
+
+// Side note: The data returned from the api sometimes doesn't match the docs provided. In the docs, some logs had fields called "id" but those fields were actually returned as "dinosaur_id" from the api. 
+
+### Harder
+
+We can make the app more interactive
+- Have a field to change the time and date (like a dateTime picker, so the employees can plan their maintenance) 
+- Show where the dinosaurs are on the grid (I know this is already kind of done, since only blocks containing dinosaurs will be shaded, but maybe there could be a dinosaur icon to explicitly show the locations of the dinosaurs or something) 
+- Have an input form to add new dinosaurs 
+- Click on a dinosaur to remove it or feed it
+- Click on a block to maintain the block
+
+### Even Harder
+- Dinosaurs can escape.
+- A dinosaur will have its speed per hour (in blocks) logged when it is moved to the park.
+- When a dinosaur escapes, the program can calculate and show the possible blocks where the dinosaur might be at the time of viewing (and shade the blocks in yellow or something) 
