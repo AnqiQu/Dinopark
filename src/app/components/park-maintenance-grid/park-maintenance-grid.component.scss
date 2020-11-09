@@ -1,15 +1,37 @@
 @import '../../../styles/theme';
+@import "~bootstrap/scss/bootstrap-grid";
 
 mat-card {
-    h1 {
-        font-size: 2.3rem;
-        margin-top: 1rem;
-        font-weight: bold;
+    width: 75%;
+    @include media-breakpoint-down(sm) {
+        width: 95%;
     }
 
-    h2 {
-        font-size: 1.5rem;
-        color: $dark-grey;
+    .card-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 1rem;
+        background-color: white;
+
+        @include media-breakpoint-down(sm) {
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+    
+        h2 {
+            font-size: 1.5rem;
+            color: $dark-grey;
+        }
+
     }
 
     mat-grid-list{
@@ -30,6 +52,10 @@ mat-card {
             
             &.red {
                 background-color: $warn;
+            }
+
+            @include media-breakpoint-down(sm) {
+                font-size: 0.5rem;
             }
         }
     } 
