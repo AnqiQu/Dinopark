@@ -3,7 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Dino } from '../interfaces/dino.interface';
 import { DinoLocation } from '../interfaces/dino-location.interface';
 import { Maintenance } from '../interfaces/maintenance.interface';
-import { EventKind } from '../enums/event-kind'
+import { EventKind } from '../enums/event-kind';
+import { ApiOutputData } from '../interfaces/api-output-data.interface';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class NudlsApiService {
@@ -15,7 +18,11 @@ export class NudlsApiService {
   constructor(
     private http: HttpClient
   ) {
-    this.http.get('https://dinoparks.net/nudls/feed').subscribe((feed: Array<any>) => {
+  }
+
+  getData(): Observable<any> {
+    return this.http.get<any>('https://dinoparks.net/nudls/feed').pipe(
+      tap((feed: Array<any>) => {
       feed.sort((a, b) => +(new Date(a.time)) - +(new Date(b.time)));
       feed.forEach(event => {
         switch (event.kind){
@@ -74,19 +81,15 @@ export class NudlsApiService {
           }
         }
       });
-    })
-  }
 
-  getDinos() {
-    return this.dinos;
-  }
+      return {
+        dinos: this.dinos,
+        dinoLocations: this.dinoLocations,
+        maintenances: this.maintenances
+      } as ApiOutputData
 
-  getDinoLocations() {
-    return this.dinoLocations;
-  }
-
-  getMaintenances() {
-    return this.maintenances;
+      }) 
+    );
   }
 
   private _removeDino(dino: Dino) {

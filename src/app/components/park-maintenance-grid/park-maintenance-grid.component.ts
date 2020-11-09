@@ -7,6 +7,7 @@ import { NudlsApiService } from '../../services/nudls-api.service';
 import { AlphabetLetter } from '../../enums/alphabet-letter';
 import { ZoneStatus } from '../../enums/zone-status';
 import * as moment from 'moment';
+import { ApiOutputData } from 'src/app/interfaces/api-output-data.interface';
 
 @Component({
   selector: 'park-maintenance-grid',
@@ -30,9 +31,11 @@ export class ParkMaintenanceGridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dinos = this.nudlsApiService.getDinos();
-    this.dinoLocations = this.nudlsApiService.getDinoLocations();
-    this.maintenances = this.nudlsApiService.getMaintenances();
+    this.nudlsApiService.getData().subscribe(result => {
+      this.dinos = result.dinos;
+      this.dinoLocations = result.dinoLocations;
+      this.maintenances = result.maintenances;
+    });
 
     for (var i = 0; i < 16; i++) {
       for (let letter in AlphabetLetter) {
