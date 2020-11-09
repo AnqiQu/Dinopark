@@ -11,7 +11,7 @@
                 </mat-grid-tile>
                 <mat-grid-tile *ngFor="let tile of row"
                                 class="map-tile {{ getTileColor(tile) }}">
-                    {{ tile.id }}
+                    <img *ngIf="needsMaintenance(tile)" src="{{ maintenanceImage }}" alt="wrench" class="h-75">
                 </mat-grid-tile>
             </ng-container>
             <mat-grid-tile></mat-grid-tile> <!--Spacer tile-->

@@ -81,7 +81,7 @@ export class NudlsApiService {
           }
         }
       });
-      
+
       subject.next({
         dinos: this.dinos,
         dinoLocations: this.dinoLocations,

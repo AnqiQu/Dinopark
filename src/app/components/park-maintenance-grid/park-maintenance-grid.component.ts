@@ -24,6 +24,7 @@ export class ParkMaintenanceGridComponent implements OnInit {
     grid: GridTile[][] = Array.from(Array(16), () => new Array(26));
     AlphabetLetters = AlphabetLetter;
     dateNow = new Date();
+    maintenanceImage = '../../../assets/dino-parks-wrench.png'
 
   constructor(
     @Inject(NudlsApiService) protected nudlsApiService: NudlsApiService,
@@ -75,6 +76,19 @@ export class ParkMaintenanceGridComponent implements OnInit {
         return '';
       }
     }
+  }
+
+  needsMaintenance(tile: GridTile): boolean {
+    let tileMaintainences = this.maintenances?.filter(a => a.locationId == tile.id);
+    if (tileMaintainences.length == 0) {
+      return false;
+    }
+
+    tileMaintainences.sort((a, b) => +b.time - +a.time);
+
+    console.log(tileMaintainences);
+
+    return this._getDifferenceInDays(this.dateNow, tileMaintainences[0].time) > 30;
   }
 
   private _containsDino(tile: GridTile): boolean {
