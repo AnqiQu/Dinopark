@@ -1,7 +1,7 @@
 <mat-card class="mx-auto w-75">
     <div class="d-flex justify-content-between align-items-end p-3">
         <h1>Park Zones</h1>
-        <h2>Date</h2>
+        <h2>{{ formatDateForHeading(dateNow) }}</h2>
     </div>
     <mat-card-content>
         <mat-grid-list cols="27" rowHeight="1.5:1" gutterSize="0px">
@@ -10,7 +10,7 @@
                     {{ i + 1 }}
                 </mat-grid-tile>
                 <mat-grid-tile *ngFor="let tile of row"
-                                class="map-tile">
+                                class="map-tile {{ getTileColor(tile) }}">
                     {{ tile.id }}
                 </mat-grid-tile>
             </ng-container>

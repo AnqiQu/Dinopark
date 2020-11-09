@@ -24,11 +24,11 @@ mat-card {
                 border-top: solid 1.5px $light-grey;
             }
 
-            .safe {
+            .green {
                 background-color: $primary;
             }
             
-            .unsafe {
+            .red {
                 background-color: $warn;
             }
         }
