@@ -13,6 +13,8 @@ $text: $space-cadet;
 $warn-palette: mat-palette($bright-maroon-palette);
 $warn: $bright-maroon;
 $background-color: $alice-blue;
+$light-grey: $gainsboro;
+$dark-grey: $pewter-blue;
 
 // Create the theme 
 $base-theme: mat-light-theme($primary-palette, $accent-palette, $warn-palette);

@@ -2,12 +2,14 @@
 
 mat-card {
     h1 {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
         margin-top: 1rem;
+        font-weight: bold;
     }
 
     h2 {
-        color: gainsboro;
+        font-size: 1.5rem;
+        color: $dark-grey;
     }
 
     mat-grid-list{
@@ -15,20 +17,20 @@ mat-card {
             background-color: white;
 
             &.map-tile {
-                border: solid 1.5px gainsboro;
+                border: solid 1.5px $light-grey;
             }
 
             &.letter-tile {
-                border-top: solid 1.5px gainsboro;
+                border-top: solid 1.5px $light-grey;
+            }
+
+            .safe {
+                background-color: $primary;
+            }
+            
+            .unsafe {
+                background-color: $warn;
             }
         }
     } 
-}
-
-.safe {
-    background-color: $primary;
-}
-
-.unsafe {
-    background-color: $warn;
 }
